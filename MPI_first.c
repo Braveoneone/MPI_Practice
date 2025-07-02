@@ -10,7 +10,7 @@ typedef struct {
     float f;
     int i;
   } number;
-} CommRankNumber
+} CommRankNumber;
 
 // 根进程获取其他进程的data，合并到自己的value中，并返回最终gather结果。这里用的是Gather，
 // 函数相对于根结点设计。
@@ -24,7 +24,7 @@ void *gather_numbers_to_root(void *number, MPI_Datatype datatype, MPI_Comm comm)
   void *gathered_numbers = NULL;
 
   if(comm_rank == 0) {
-    gathered_numbers = malloc(datatype_size * comm_size)
+    gathered_numbers = malloc(datatype_size * comm_size);
   }
 
   MPI_Gather(number, 1, datatype, gathered_numbers, 1, datatype, 0, comm);
