@@ -50,7 +50,7 @@ int compare_int(const void *a, const void *b) {
     return 0;
 }
 
-int *get_ranks(void *gathered_nums, int count, MPI_Datatype, datatype) {
+int *get_ranks(void *gathered_nums, int count, MPI_Datatype datatype) {
     int datatype_size;
     MPI_Type_size(datatype, &datatype_size);
     
