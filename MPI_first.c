@@ -130,22 +130,25 @@ int main(int argc, char **argv) {
 
     // 收集所有进程的数值用于显示
     float *all_numbers = NULL;
+    int *all_ranks = NULL;
     if (rank == 0) {
         all_numbers = malloc(size * sizeof(float));
+        all_ranks = malloc(size * sizeof(int));
     }
     MPI_Gather(&number, 1, MPI_FLOAT, all_numbers, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
-
+    MPI_Gather(&my_rank, 1, MPI_INT, all_ranks, 1, MPI_INT, 0, MPI_COMM_WORLD);
     // 打印结果
     if (rank == 0) {
         printf("\n并行排名结果:\n");
         printf("进程\t数值\t排名\n");
         printf("-------------------\n");
         for (int i = 0; i < size; i++) {
-            printf("%d\t%.2f\t%d\n", i, all_numbers[i], my_rank);
+            printf("%d\t%.2f\t%d\n", i, all_numbers[i], all_ranks[i]);
         }
         free(all_numbers);
+        free(all_ranks);
     }
 
-    MPI_Finalize();  // 清理MPI环境
+    MPI_Finalize();
     return 0;
 }
